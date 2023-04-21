@@ -61,7 +61,14 @@ class _StartScreenState extends State<StartScreen> {
                   children: [
                     Expanded(child: Container()),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return makeCountryListView(context);
+                          },
+                        );
+                      },
                       child: Row(
                         children: [
                           Text(
@@ -136,6 +143,34 @@ class _StartScreenState extends State<StartScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Container makeCountryListView(BuildContext context) {
+    // TODO: Bottom Sheet 높이를 ListView 높이에 맞춰 적용되도록 수정
+    return Container(
+      color: Theme.of(context).colorScheme.background,
+      padding: const EdgeInsets.all(15),
+      child: ListView.separated(
+        scrollDirection: Axis.vertical,
+        itemCount: countryList.length,
+        itemBuilder: (context, index) {
+          var country = countryList[index];
+          return Container(
+            padding: const EdgeInsets.all(10),
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectCountry = country;
+                  Navigator.pop(context);
+                });
+              },
+              child: Text(country),
+            ),
+          );
+        },
+        separatorBuilder: (context, index) => const SizedBox(),
       ),
     );
   }
