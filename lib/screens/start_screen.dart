@@ -30,7 +30,7 @@ class _StartScreenState extends State<StartScreen> {
               children: [
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 150),
-                  child: Image.asset('assets/goguma_icon.png'),
+                  child: Image.asset('assets/images/goguma_icon.png'),
                 ),
                 const SizedBox(
                   height: 15,
