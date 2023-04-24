@@ -13,7 +13,7 @@ class BoxButtonWidget extends StatelessWidget {
       children: [
         Expanded(
           child: SizedBox(
-            height: 50,
+            height: 60,
             child: TextButton(
               onPressed: enabled ? callback : null,
               style: ButtonStyle(

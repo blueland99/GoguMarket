@@ -12,7 +12,12 @@ class CertScreen extends StatefulWidget {
 }
 
 class _CertScreenState extends State<CertScreen> {
+  final int CERT_NUMBER_SIZE = 6;
+  final int PHONE_NUMBER_SIZE = 11;
+
   bool isCertButtonEnabled = false;
+  bool isCertNumberButtonVisible = false;
+  bool isCertNumberButtonEnabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,17 +66,23 @@ class _CertScreenState extends State<CertScreen> {
               height: 15,
             ),
             TextField(
-              maxLength: 11,
+              maxLength: PHONE_NUMBER_SIZE,
               keyboardType: TextInputType.number,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
                   RegExp('[0-9]'),
                 ),
               ],
-              decoration: const InputDecoration(contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15), border: OutlineInputBorder(), focusedBorder: OutlineInputBorder(), hintText: '휴대폰 번호를 입력해주세요', counterText: ''),
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(),
+                hintText: '휴대폰 번호를 입력해주세요',
+                counterText: '',
+              ),
               style: Theme.of(context).textTheme.labelSmall,
               onChanged: (value) {
-                isCertButtonEnabled = (value.length == 11);
+                isCertButtonEnabled = (value.length == PHONE_NUMBER_SIZE);
                 setState(() {});
               },
             ),
@@ -79,42 +90,124 @@ class _CertScreenState extends State<CertScreen> {
               height: 15,
             ),
             BoxButtonWidget(
-              text: '인증문자 받기',
+              text: isCertNumberButtonVisible ? '인증문자 다시 받기' : '인증문자 받기',
               enabled: isCertButtonEnabled,
               callback: () {
                 // TODO: 인증문자 받기 클릭
+                getCertNumber();
               },
             ),
             const SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        '휴대폰 번호가 변경되었나요?',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black54,
+            Visibility(
+              visible: !isCertNumberButtonVisible,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          '휴대폰 번호가 변경되었나요?',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black54,
+                          ),
                         ),
-                      ),
-                      TextButtonWidget(
-                        text: '이메일로 계정찾기',
-                        callback: () {
-                          // TODO: 이메일로 계정찾기 클릭
-                        },
-                      ),
-                    ],
+                        TextButtonWidget(
+                          text: '이메일로 계정찾기',
+                          callback: () {
+                            // TODO: 이메일로 계정찾기 클릭
+                          },
+                        ),
+                      ],
+                    ),
                   ),
+                ],
+              ),
+            ),
+            Visibility(
+              visible: isCertNumberButtonVisible,
+              child: TextField(
+                maxLength: CERT_NUMBER_SIZE,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                    RegExp('[0-9]'),
+                  ),
+                ],
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(),
+                  hintText: '인증번호를 입력해주세요',
+                  counterText: '',
                 ),
-              ],
+                style: Theme.of(context).textTheme.labelSmall,
+                onChanged: (value) {
+                  isCertNumberButtonEnabled = (value.length == CERT_NUMBER_SIZE);
+                  setState(() {});
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Visibility(
+              visible: isCertNumberButtonVisible,
+              child: Text(
+                '어떤 경우에도 타인에게 공유하지 마세요!',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Visibility(
+              visible: isCertNumberButtonVisible,
+              child: BoxButtonWidget(
+                text: '인증번호 확인',
+                enabled: isCertNumberButtonEnabled,
+                callback: () {
+                  // TODO: 인증번호 확인 클릭
+                  checkCertNumber();
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Visibility(
+              visible: isCertNumberButtonVisible,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      // TODO: 인증번호가 오지 않나요? 클릭
+                    },
+                    child: Text(
+                      '인증번호가 오지 않나요?',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void getCertNumber() {
+    isCertNumberButtonVisible = true;
+    // TODO: 인증번호 발급
+    setState(() {});
+  }
+
+  void checkCertNumber() {
+    // TODO: 인증번호 확인
   }
 }
