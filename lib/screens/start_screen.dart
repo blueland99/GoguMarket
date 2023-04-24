@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gogu_market/screens/cert_screen.dart';
+import 'package:gogu_market/widgets/button_widget.dart';
 
+/// 시작 화면
 class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);
 
@@ -95,26 +98,15 @@ class _StartScreenState extends State<StartScreen> {
               ],
             ),
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.all(15),
-                  height: 50,
-                  child: TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      elevation: 0,
-                    ),
-                    child: Text(
-                      '시작하기',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: BoxButtonWidget(
+              text: '시작하기',
+              callback: () {
+                // TODO: 시작하기 클릭
+              },
+              enabled: true,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 30),
@@ -128,16 +120,18 @@ class _StartScreenState extends State<StartScreen> {
                     color: Colors.black54,
                   ),
                 ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    '로그인',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
+                TextButtonWidget(
+                  text: '로그인',
+                  callback: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const CertScreen();
+                        },
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
