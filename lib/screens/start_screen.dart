@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gogu_market/screens/cert_screen.dart';
+import 'package:gogu_market/screens/main_screen.dart';
 import 'package:gogu_market/widgets/button_widget.dart';
 
 /// 시작 화면
@@ -104,6 +105,14 @@ class _StartScreenState extends State<StartScreen> {
               text: '시작하기',
               callback: () {
                 // TODO: 시작하기 클릭
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const MainScreen();
+                    },
+                  ),
+                );
               },
               enabled: true,
             ),

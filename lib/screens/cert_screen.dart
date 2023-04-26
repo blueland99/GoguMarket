@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gogu_market/screens/main_screen.dart';
 
 import '../widgets/button_widget.dart';
 
@@ -35,10 +36,11 @@ class _CertScreenState extends State<CertScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.only(left: 20),
           icon: const Icon(
             Icons.arrow_back_ios,
             color: Colors.black,
+            size: 20,
           ),
         ),
       ),
@@ -209,5 +211,13 @@ class _CertScreenState extends State<CertScreen> {
 
   void checkCertNumber() {
     // TODO: 인증번호 확인
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return const MainScreen();
+        },
+      ),
+    );
   }
 }
